@@ -96,11 +96,11 @@ Open the app settings and paste your own keys. This repository does not include 
 | --- | --- |
 | DeepSeek-compatible API | Soul distillation and chat |
 | OpenAI-compatible API | Optional search augmentation and image generation |
-| Volcengine Ark / Seedance | Optional stage video generation |
+| Volcengine Ark / Seedance | Optional stage video generation; the clean template ships with a safe disabled backend stub |
 
-For local development, you may also use environment variables supported by the Tauri backend, such as `ARK_API_KEY`. Do not commit real secrets.
+For local development, you may also use environment variables supported by the Tauri backend, such as `ARK_API_KEY`. Do not commit real secrets. The public clean template keeps Seedance task creation disabled in the Rust backend until you wire your own production provider implementation.
 
-本地开发可按后端支持使用 `ARK_API_KEY` 等环境变量。不要提交真实密钥。
+本地开发可按后端支持使用 `ARK_API_KEY` 等环境变量。不要提交真实密钥。公开纯净版的 Rust 后端默认禁用 Seedance 任务创建，需要你接入自己的生产级 provider 实现后再开放视频生成。
 
 ## Clean Template Guarantee / 纯净版说明
 
