@@ -1,0 +1,4 @@
+/* App-level resets — all theming lives in index.css */
+#root {
+  min-height: 100vh;
+}
