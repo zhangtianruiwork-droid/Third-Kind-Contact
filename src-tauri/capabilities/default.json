@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Default capabilities for Third Kind Contact",
+  "description": "Default capabilities for 英灵殿 desktop pet",
   "windows": ["main"],
   "permissions": [
     "core:default",

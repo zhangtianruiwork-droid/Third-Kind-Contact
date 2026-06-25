@@ -76,7 +76,7 @@ export function PetSprite({ character, state, onMouseDown, onContextMenu }: Prop
         }}>
           <div style={{ fontSize: 28, marginBottom: 6 }}>{character.avatar || 'T'}</div>
           <div style={{ fontSize: 13, fontWeight: 700 }}>{character.name}</div>
-          <div style={{ fontSize: 10, color: '#8E8E93', marginTop: 4 }}>Generate a sprite to animate</div>
+          <div style={{ fontSize: 10, color: '#8E8E93', marginTop: 4 }}>Generate sprite first</div>
         </div>
       )}
     </div>

@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Third Kind Contact",
+  "productName": "英灵殿",
   "version": "0.1.0",
-  "identifier": "com.thirdkind.contact",
+  "identifier": "com.yingling.pet",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:5173",
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Third Kind Contact",
+        "title": "英灵殿",
         "width": 1280,
         "height": 820,
         "minWidth": 900,

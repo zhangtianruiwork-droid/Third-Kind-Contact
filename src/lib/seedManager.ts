@@ -1,13 +1,13 @@
-﻿// Seed data export / import for portable distribution.
-// Seed file lives next to Third Kind Contact executable as  third_kind_contact_seed.json.
+// Seed data export / import for portable distribution.
+// Seed file lives next to yingling.exe as  yingling_seed.json.
 
 import { invoke } from '@tauri-apps/api/core';
 import { SpriteStore } from './spriteStore';
 import { ALL_POSES } from './petActions';
 import { normalizeDeepSeekBase } from './store';
 
-const IMPORTED_FLAG = 'third_kind_contact_seed_imported';
-const LS_PREFIX     = 'third_kind_contact_';
+const IMPORTED_FLAG = 'yingling_seed_imported';
+const LS_PREFIX     = 'yingling_';
 const CONFIG_KEY    = LS_PREFIX + 'config';
 const SCENE_KEY     = LS_PREFIX + 'companion_scenes_v1';
 const SCENE_MARKER  = '__SCENE_ASSET__/';
@@ -20,7 +20,7 @@ interface InstalledSceneAsset {
 interface SeedData {
   version: 3;
   localStorage: Record<string, string>;
-  sprites: Record<string, string>; // "charId::pose" 鈫?base64
+  sprites: Record<string, string>; // "charId::pose" → base64
 }
 
 function emptyConfig(): string {
@@ -84,7 +84,7 @@ function resolveSceneStorage(value: string, assets: Map<string, string>): string
   }
 }
 
-// 鈹€鈹€ Export 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+// ── Export ────────────────────────────────────────────────────
 
 export async function exportSeed(): Promise<boolean> {
   const lsData: Record<string, string> = {};
@@ -124,7 +124,7 @@ export async function exportSeed(): Promise<boolean> {
   }
 }
 
-// 鈹€鈹€ Import 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+// ── Import ────────────────────────────────────────────────────
 
 async function importSeed(json: string): Promise<void> {
   const seed = JSON.parse(json) as SeedData;
@@ -157,7 +157,7 @@ async function importSeed(json: string): Promise<void> {
   localStorage.setItem(IMPORTED_FLAG, '1');
 }
 
-// 鈹€鈹€ Startup check 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+// ── Startup check ─────────────────────────────────────────────
 
 export async function checkAndImportSeed(): Promise<boolean> {
   if (localStorage.getItem(IMPORTED_FLAG)) return false;

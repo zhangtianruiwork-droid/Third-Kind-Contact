@@ -1,7 +1,7 @@
-﻿// IndexedDB storage for AI-generated pixel sprites.
+// IndexedDB storage for AI-generated pixel sprites.
 // Sprites are stored as base64 PNG strings, keyed by `${characterId}::${pose}`.
 
-const DB_NAME    = 'third_kind_contact_sprites';
+const DB_NAME    = 'yingling_sprites';
 const STORE_NAME = 'sprites';
 const DB_VERSION = 1;
 

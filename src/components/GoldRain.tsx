@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 
-const CHARS = 'THIRDKINDCONTACTSOULARCHIVECOMPANIONSTUDIOLOCALFIRST0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const CHARS =
+  '英灵殿魂档案协议召唤蒸馏回路意识矩阵星图战术策略知行合一' +
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export function GoldRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -8,51 +10,66 @@ export function GoldRain() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const ctx = canvas.getContext('2d')!;
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let animationId = 0;
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+
     const fontSize = 15;
-    const drops: number[] = [];
+    const columns = Math.floor(w / fontSize);
+    const drops: number[] = Array(columns).fill(0).map(() => Math.random() * -50);
+    const speeds: number[] = Array(columns).fill(0).map(() => Math.random() * 0.4 + 0.15);
+    const bright: number[] = Array(columns).fill(0).map(() => Math.random());
 
-    const reset = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      drops.length = 0;
-      for (let i = 0; i < Math.floor(width / fontSize); i += 1) {
-        drops.push(Math.random() * -50);
-      }
-    };
-
-    const draw = () => {
+    function draw() {
       ctx.fillStyle = 'rgba(5, 8, 22, 0.052)';
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+      ctx.fillRect(0, 0, w, h);
 
-      for (let i = 0; i < drops.length; i += 1) {
+      for (let i = 0; i < drops.length; i++) {
         const char = CHARS[Math.floor(Math.random() * CHARS.length)];
         const x = i * fontSize;
         const y = drops[i] * fontSize;
-        ctx.fillStyle = i % 3 === 0 ? 'rgba(242,199,92,0.42)' : 'rgba(89,243,255,0.32)';
+
+        // Lead glyphs are subtle so UI panels stay readable.
+        ctx.fillStyle = bright[i] > 0.6
+          ? `rgba(242, 199, 92, ${0.34 + bright[i] * 0.22})`
+          : `rgba(89, 243, 255, ${0.26 + bright[i] * 0.18})`;
+        ctx.font = `${fontSize}px "Noto Serif SC", "SimSun", serif`;
         ctx.fillText(char, x, y);
-        drops[i] += 0.25 + (i % 5) * 0.05;
-        if (y > height && Math.random() > 0.975) drops[i] = Math.random() * -20;
+
+        // trailing fade
+        if (drops[i] > 1) {
+          ctx.fillStyle = `rgba(143, 123, 255, ${0.05 + bright[i] * 0.06})`;
+          ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, y - fontSize);
+        }
+
+        drops[i] += speeds[i];
+
+        if (y > h && Math.random() > 0.975) {
+          drops[i] = Math.random() * -20;
+          speeds[i] = Math.random() * 0.4 + 0.15;
+          bright[i] = Math.random();
+        }
       }
+    }
 
-      animationId = requestAnimationFrame(draw);
+    let animId: number;
+    const animate = () => { draw(); animId = requestAnimationFrame(animate); };
+    animate();
+
+    const onResize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w;
+      canvas.height = h;
     };
-
-    reset();
-    draw();
-    window.addEventListener('resize', reset);
+    window.addEventListener('resize', onResize);
 
     return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', reset);
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -60,13 +77,9 @@ export function GoldRain() {
     <canvas
       ref={canvasRef}
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 0,
-        opacity: 0.2,
+        position: 'fixed', top: 0, left: 0,
+        width: '100%', height: '100%',
+        zIndex: 0, opacity: 0.2,
         pointerEvents: 'none',
       }}
     />

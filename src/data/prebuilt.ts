@@ -1,5 +1,5 @@
 import type { Character } from '../lib/types';
 
-// The public template ships without cloned or prebuilt characters.
-// Users create their own souls through the Summon flow.
+// Public clean build: no bundled or cloned characters.
+// Users create their own profiles through the original Summon flow.
 export const PREBUILT_CHARACTERS: Character[] = [];

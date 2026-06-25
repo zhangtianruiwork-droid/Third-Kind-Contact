@@ -1,6 +1,6 @@
-﻿import type { CompanionScene } from './sceneTypes';
+import type { CompanionScene } from './sceneTypes';
 
-const KEY = 'third_kind_contact_companion_scenes_v1';
+const KEY = 'yingling_companion_scenes_v1';
 
 type SceneIndex = Record<string, CompanionScene[]>;
 

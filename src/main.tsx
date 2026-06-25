@@ -1,12 +1,33 @@
-import { StrictMode } from 'react';
+import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
+import { SelectionApp } from './SelectionApp.tsx';
+import { PetApp } from './PetApp.tsx';
+import type { Character } from './lib/types.ts';
 import { checkAndImportSeed } from './lib/seedManager.ts';
 
 const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 
 if (isTauri) document.documentElement.classList.add('tauri-mode');
+
+function TauriRoot() {
+  const [mode, setMode] = useState<'selection' | 'pet'>('selection');
+  const [character, setCharacter] = useState<Character | null>(null);
+
+  const handleEnterPet = (char: Character) => {
+    setCharacter(char);
+    setMode('pet');
+  };
+
+  const handleExitPet = () => {
+    setMode('selection');
+  };
+
+  if (mode === 'pet' && character) {
+    return <PetApp character={character} onExit={handleExitPet} />;
+  }
+  return <SelectionApp onEnterPet={handleEnterPet} />;
+}
 
 async function init() {
   if (isTauri) {
@@ -16,7 +37,7 @@ async function init() {
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <App />
+      <TauriRoot />
     </StrictMode>,
   );
 }
