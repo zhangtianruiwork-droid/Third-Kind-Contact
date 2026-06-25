@@ -7,7 +7,7 @@ import { ALL_POSES } from './petActions';
 import { normalizeDeepSeekBase } from './store';
 
 const IMPORTED_FLAG = 'yingling_seed_imported';
-const LS_PREFIX     = 'yingling_';
+const LS_PREFIX     = 'thirdkind_clean_';
 const CONFIG_KEY    = LS_PREFIX + 'config';
 const SCENE_KEY     = LS_PREFIX + 'companion_scenes_v1';
 const SCENE_MARKER  = '__SCENE_ASSET__/';

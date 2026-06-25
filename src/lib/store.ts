@@ -1,6 +1,6 @@
 import type { Character, Message } from './types';
 
-const PREFIX = 'yingling_';
+const PREFIX = 'thirdkind_clean_';
 const DEFAULT_DEEPSEEK_BASE = 'https://api.deepseek.com';
 
 export interface Config {
