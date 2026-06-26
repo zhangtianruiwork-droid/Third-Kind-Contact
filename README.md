@@ -1,95 +1,76 @@
 # Third Kind Contact / 英灵殿
 
-> 一句话，完美复刻你喜欢人物的灵魂与形象。  
-> Recreate the soul, voice, and visual presence of any character you love, from a single prompt.
+<p align="center">
+  <img src="docs/screenshots/desktop-companion-demo-optimized.gif" alt="Third Kind Contact desktop companion demo" width="760" />
+</p>
 
-![Desktop companion demo](docs/screenshots/desktop-companion-demo-optimized.gif)
+<h3 align="center">一句话，复刻你喜欢人物的灵魂与形象</h3>
 
-Third Kind Contact is a Tauri + React desktop companion studio. It turns a short character description into a structured AI persona: personality, speech style, mental models, interaction patterns, avatar assets, and an optional desktop companion stage.
+<p align="center">
+  <strong>AI Character Studio · Soul Distillation · Visual Companion · Desktop Stage</strong>
+</p>
 
-英灵殿是一个桌面端 AI 角色复刻工作室。你只需要写下一句话或一段描述，它就能帮助你把喜欢的人物转化为可对话、可召唤、可生成形象、可停留在桌面的 AI 伙伴。
+<p align="center">
+  <a href="#快速开始--quick-start">快速开始</a> ·
+  <a href="#功能亮点--features">功能亮点</a> ·
+  <a href="#产品截图--screenshots">产品截图</a> ·
+  <a href="#api-配置--api-setup">API 配置</a> ·
+  <a href="#english">English</a>
+</p>
 
-This repository is the clean public source release: no bundled API keys, no cloned private characters, and no private generated assets.
+Third Kind Contact / 英灵殿是一款桌面端 AI 角色复刻工作室。你只需要输入一句话或一段角色资料，它就能帮助你提炼人物的性格、语言、思维方式与视觉形象，并把它召唤成可以聊天、可以生成形象、可以停留在桌面的 AI 伙伴。
 
-本仓库是公开纯净版：不内置 API Key，不包含私有克隆角色，不包含个人生成素材。
+它不是普通的提示词聊天壳，而是一套完整的角色生成流程：从角色设定、语料蒸馏、灵魂档案、形象生成，到桌面陪伴和舞台展示。
 
-## Why It Exists / 项目理念
+---
 
-Most AI chat tools stop at "a prompt". Third Kind Contact goes further: it builds a full character archive that can be inspected, refined, summoned, and reused.
+## 适合谁使用 / Who Is It For
 
-多数 AI 角色工具停留在“一段提示词”。英灵殿更进一步：它把人物复刻成一份可审阅、可调整、可召唤、可长期保存的灵魂档案。
+- 想把喜欢的历史人物、小说角色、游戏角色复刻成 AI 伙伴的人。
+- 正在创作小说、剧本、游戏、视觉企划，需要稳定角色人格与语言风格的创作者。
+- 想研究“角色智能体”“人格建模”“桌面陪伴应用”的开发者。
+- 需要一个本地优先、可自带模型 Key、可自由扩展的 AI 角色工作台的用户。
 
-- **Soul distillation**: extract personality traits, speech patterns, beliefs, memories, and reasoning style from user-provided material.
-- **Visual embodiment**: generate or attach avatar and sprite assets so the character has a visible presence.
-- **Desktop companion mode**: keep the character on your desktop as an interactive companion.
-- **Local-first workflow**: profiles, chat history, and settings stay local unless you explicitly export them.
-- **Bring your own keys**: connect your own DeepSeek-compatible, OpenAI-compatible, or Volcengine Ark / Seedance APIs.
+---
 
-- **灵魂蒸馏**：从语料中提取性格、语言风格、信念、记忆和思维方式。
-- **形象复刻**：为角色生成或绑定头像、像素形象和舞台素材。
-- **桌面陪伴**：让角色以可交互小伙伴的形式停留在桌面。
-- **本地优先**：角色、设置、聊天记录默认保存在本机。
-- **自带密钥**：用户自行接入 DeepSeek 兼容接口、OpenAI 兼容接口或火山方舟 / Seedance。
+## 功能亮点 / Features
 
-## Screenshots / 产品截图
+| 功能 | 说明 |
+| --- | --- |
+| 一句话召唤 | 输入人物名称、时代、简介或语料，快速生成角色档案 |
+| 灵魂蒸馏 | 自动提炼性格特征、语言风格、心智模型、互动方式 |
+| 英灵选择殿 | 管理、选择、导出你的角色档案 |
+| 对话与陪伴 | 与角色持续对话，并保存本地会话记录 |
+| 形象生成 | 支持头像、像素形象、桌面角色资产生成 |
+| 桌面舞台 | 将角色放到桌面环境中，以更具沉浸感的方式互动 |
+| 本地优先 | 角色、设置、聊天记录默认存放在本机 |
+| 自带模型 | 支持 DeepSeek / OpenAI 兼容接口及可选视频生成接口 |
 
-### 1. Herald Registry / 英灵选择殿
+---
 
-Create, manage, select, and export your character profiles in the original Valhalla-style registry.
+## 产品截图 / Screenshots
 
-在英灵选择殿中创建、管理、选择和导出你的角色档案。
+### 英灵选择殿
+
+管理你创建的角色，查看身份、标签、形象和配置状态。
 
 ![Herald gallery with settings](docs/screenshots/herald-gallery-with-settings.png)
 
-### 2. Soul Distillation / 灵魂蒸馏
+### 灵魂蒸馏结果
 
-The app turns raw material into structured traits, speech tags, mental models, and interaction rules before summoning the character.
-
-应用会把原始语料转化为核心性格特征、语言风格、心智模型和互动方式，再完成角色召唤。
+将输入语料转化为结构化人格：核心性格、语言风格、心智模型与互动方式。
 
 ![Soul distillation result](docs/screenshots/soul-distillation-result.png)
 
-### 3. Summoning Ritual / 召唤仪式
+### 召唤仪式
 
-Start from a name, era, short description, and source material. The wizard guides you from concept to usable companion.
-
-从姓名、时代、简介和语料开始，召唤向导会带你完成从想法到可用 AI 伙伴的全过程。
+从基础信息到语料补全，再到灵魂蒸馏和确认召唤，完整生成一个可使用的角色。
 
 ![Summon ritual](docs/screenshots/summon-ritual.png)
 
-## What You Can Build / 你可以复刻什么
+---
 
-- Fictional characters with consistent personality, voice, and interaction habits.
-- Historical figures for study, roleplay, writing, or simulation.
-- Original characters for games, novels, visual projects, and companion apps.
-- Personal productivity companions with custom tone, memory, and workflows.
-
-- 拥有稳定人格、语气和互动习惯的虚构角色。
-- 用于学习、写作、角色扮演或模拟的历史人物。
-- 游戏、小说、视觉项目中的原创角色。
-- 拥有自定义语气、记忆和工作流的个人桌面助手。
-
-## Clean Release Guarantees / 纯净版承诺
-
-This public version intentionally removes private data:
-
-- No bundled API keys.
-- No prebuilt or cloned character profiles.
-- No private avatars, sprites, or desktop-stage assets.
-- No exported localStorage seed file.
-- No `node_modules`, `dist`, or Tauri `target` cache.
-- Clean build uses an isolated app identifier and storage prefix, so it will not inherit private local data from the original app.
-
-此公开版本已移除私有数据：
-
-- 不内置任何 API Key。
-- 不包含预置或克隆人物档案。
-- 不包含私有人物头像、sprite 或舞台素材。
-- 不包含导出的 localStorage 种子文件。
-- 不包含 `node_modules`、`dist` 或 Tauri `target` 缓存。
-- 纯净版使用独立应用 ID 和独立本地存储前缀，不会继承原版应用的私有本地数据。
-
-## Quick Start / 快速开始
+## 快速开始 / Quick Start
 
 ```bash
 git clone https://github.com/zhangtianruiwork-droid/Third-Kind-Contact.git
@@ -98,64 +79,101 @@ npm install
 npm run dev
 ```
 
-Open the web preview:
+打开网页预览：
 
 ```text
 http://localhost:5173
 ```
 
-Run the desktop app:
+启动桌面版：
 
 ```bash
 npx tauri dev
 ```
 
-Build a release:
+构建发行版：
 
 ```bash
 npm run build
 npx tauri build
 ```
 
-## API Setup / API 配置
+---
 
-Open the settings panel in the top-right corner and paste your own keys.
+## API 配置 / API Setup
 
-打开右上角设置面板，填入你自己的模型密钥。
+打开应用右上角设置面板，填入你自己的模型 Key。
 
-| Provider | Purpose |
+| Provider | 用途 |
 | --- | --- |
-| DeepSeek-compatible API | Soul distillation and chat |
-| OpenAI-compatible image API | Avatar / sprite generation |
-| OpenAI-compatible search API | Optional retrieval augmentation |
-| Volcengine Ark / Seedance | Optional desktop-stage video generation |
+| DeepSeek-compatible API | 灵魂蒸馏与角色对话 |
+| OpenAI-compatible Image API | 头像 / 像素形象生成 |
+| OpenAI-compatible Search API | 可选检索增强 |
+| Volcengine Ark / Seedance | 可选桌面舞台视频生成 |
 
-Never commit real secrets. Use `.env.example` only as a reference.
+应用不托管你的 API Key，不提供任何第三方模型服务担保。请自行选择服务商，并遵守其服务条款。
 
-请不要提交真实密钥，`.env.example` 仅作为配置参考。
+---
 
-## Project Structure / 项目结构
+## 项目结构 / Project Structure
 
 ```text
 src/
-  SelectionApp.tsx        Original selection hall / 英灵选择殿
-  PetApp.tsx              Desktop companion mode / 桌面伙伴模式
-  pages/SummonPage.tsx    Summoning wizard / 召唤向导
-  pages/SpriteGenPage.tsx Pixel sprite generation / 像素形象生成
-  pages/SceneGenPage.tsx  Stage video tooling / 舞台视频工具
-  lib/                    API clients, stores, seed export helpers
+  SelectionApp.tsx        英灵选择殿
+  PetApp.tsx              桌面伙伴模式
+  pages/SummonPage.tsx    召唤向导
+  pages/SpriteGenPage.tsx 像素形象生成
+  pages/SceneGenPage.tsx  舞台视频工具
+  lib/                    API、存储、导入导出逻辑
 
 src-tauri/
-  src/lib.rs              Tauri backend commands
+  src/lib.rs              Tauri 后端命令
 
-docs/screenshots/         README media
+docs/screenshots/         README 展示素材
 ```
 
-## Privacy / 隐私
+---
 
-Profiles, settings, sprites, scenes, and chat history are stored locally by default. External API calls happen only when you trigger features that require a model provider.
+## 安全与隐私 / Privacy
 
 角色档案、设置、形象、场景和聊天记录默认保存在本机。只有当你主动触发需要模型能力的功能时，应用才会调用外部 API。
+
+本仓库为公开源码版本，不包含内置 API Key、私有角色档案或个人生成素材。请不要将真实密钥提交到仓库。
+
+---
+
+## English
+
+Third Kind Contact is a desktop AI character studio built with Tauri and React. Give it a short prompt or source material, and it helps you turn a character into a structured AI persona with personality, speech style, mental models, visual identity, and optional desktop companion behavior.
+
+It is designed for writers, roleplay creators, game developers, AI companion builders, and anyone who wants a local-first character creation workflow.
+
+### Highlights
+
+- Create a character from a short description or source material.
+- Distill personality traits, speaking style, mental models, and interaction patterns.
+- Manage profiles in the Valhalla-style Herald Registry.
+- Chat with characters and keep local conversation history.
+- Generate avatar and pixel companion assets.
+- Run the app as a desktop companion experience.
+- Bring your own DeepSeek-compatible, OpenAI-compatible, or optional video-generation APIs.
+
+### Development
+
+```bash
+git clone https://github.com/zhangtianruiwork-droid/Third-Kind-Contact.git
+cd Third-Kind-Contact
+npm install
+npm run dev
+```
+
+Desktop mode:
+
+```bash
+npx tauri dev
+```
+
+---
 
 ## License
 
