@@ -3,7 +3,7 @@
 > 一句话，完美复刻你喜欢人物的灵魂与形象。  
 > Recreate the soul, voice, and visual presence of any character you love, from a single prompt.
 
-
+![Desktop companion demo](docs/screenshots/desktop-companion-demo-optimized.gif)
 
 Third Kind Contact is a Tauri + React desktop companion studio. It turns a short character description into a structured AI persona: personality, speech style, mental models, interaction patterns, avatar assets, and an optional desktop companion stage.
 
