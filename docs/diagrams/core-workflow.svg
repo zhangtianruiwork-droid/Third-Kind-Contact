@@ -1,0 +1,109 @@
+<svg width="1280" height="520" viewBox="0 0 1280 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#EEF6FF"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B7CFF"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F1F7FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0B4A8B" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2L10 6L2 10" stroke="#1F6FEB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .title{font-family:"Inter","Segoe UI","Microsoft YaHei",sans-serif;font-size:34px;font-weight:800;fill:#0F172A}
+      .subtitle{font-family:"Inter","Segoe UI","Microsoft YaHei",sans-serif;font-size:17px;font-weight:500;fill:#64748B}
+      .label{font-family:"Inter","Segoe UI","Microsoft YaHei",sans-serif;font-size:20px;font-weight:750;fill:#0F172A}
+      .small{font-family:"Inter","Segoe UI","Microsoft YaHei",sans-serif;font-size:14px;font-weight:500;fill:#64748B}
+      .tiny{font-family:"Inter","Segoe UI","Microsoft YaHei",sans-serif;font-size:12px;font-weight:700;fill:#0B7CFF;letter-spacing:.16em}
+    </style>
+  </defs>
+
+  <rect width="1280" height="520" rx="30" fill="url(#bg)"/>
+  <circle cx="1120" cy="70" r="180" fill="#D9ECFF" opacity=".55"/>
+  <circle cx="140" cy="430" r="220" fill="#E7F1FF" opacity=".75"/>
+  <path d="M80 104C260 28 474 48 632 112C821 189 1002 160 1200 84" stroke="#D7E9FF" stroke-width="18" stroke-linecap="round" opacity=".8"/>
+
+  <text x="64" y="70" class="title">核心流程</text>
+  <text x="64" y="102" class="subtitle">从一句话到可对话、可生成形象、可停留在桌面的 AI 伙伴</text>
+
+  <g filter="url(#shadow)">
+    <rect x="56" y="150" width="1168" height="228" rx="28" fill="#FFFFFF" opacity=".82"/>
+    <rect x="56.5" y="150.5" width="1167" height="227" rx="27.5" stroke="#D7E7FA"/>
+  </g>
+
+  <g transform="translate(88 198)">
+    <rect width="154" height="92" rx="22" fill="url(#soft)" stroke="#CDE1F7"/>
+    <circle cx="32" cy="32" r="18" fill="#EAF4FF"/>
+    <text x="32" y="39" text-anchor="middle" font-size="22">✦</text>
+    <text x="78" y="48" text-anchor="middle" class="label">一句话</text>
+    <text x="78" y="72" text-anchor="middle" class="small">人物资料 / 灵感</text>
+  </g>
+
+  <g transform="translate(286 198)">
+    <rect width="154" height="92" rx="22" fill="url(#soft)" stroke="#CDE1F7"/>
+    <circle cx="32" cy="32" r="18" fill="#EAF4FF"/>
+    <text x="32" y="39" text-anchor="middle" font-size="21">1</text>
+    <text x="78" y="48" text-anchor="middle" class="label">召唤向导</text>
+    <text x="78" y="72" text-anchor="middle" class="small">信息采集</text>
+  </g>
+
+  <g transform="translate(484 198)">
+    <rect width="154" height="92" rx="22" fill="url(#soft)" stroke="#CDE1F7"/>
+    <circle cx="32" cy="32" r="18" fill="#EAF4FF"/>
+    <text x="32" y="39" text-anchor="middle" font-size="21">2</text>
+    <text x="78" y="48" text-anchor="middle" class="label">语料补全</text>
+    <text x="78" y="72" text-anchor="middle" class="small">资料整理</text>
+  </g>
+
+  <g transform="translate(682 198)">
+    <rect width="154" height="92" rx="22" fill="url(#primary)" filter="url(#shadow)"/>
+    <circle cx="32" cy="32" r="18" fill="#FFFFFF" opacity=".22"/>
+    <text x="32" y="39" text-anchor="middle" font-size="21" fill="#FFFFFF">3</text>
+    <text x="78" y="48" text-anchor="middle" class="label" fill="#FFFFFF">灵魂蒸馏</text>
+    <text x="78" y="72" text-anchor="middle" class="small" fill="#EAF6FF">人格提炼</text>
+  </g>
+
+  <g transform="translate(880 198)">
+    <rect width="174" height="92" rx="22" fill="url(#soft)" stroke="#CDE1F7"/>
+    <circle cx="36" cy="32" r="18" fill="#EAF4FF"/>
+    <text x="36" y="39" text-anchor="middle" font-size="21">4</text>
+    <text x="90" y="48" text-anchor="middle" class="label">角色档案</text>
+    <text x="90" y="72" text-anchor="middle" class="small">结构化灵魂</text>
+  </g>
+
+  <path d="M246 244H278" stroke="#1F6FEB" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M444 244H476" stroke="#1F6FEB" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M642 244H674" stroke="#1F6FEB" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M840 244H872" stroke="#1F6FEB" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <g transform="translate(880 344)">
+    <rect width="108" height="58" rx="18" fill="#FFFFFF" stroke="#CDE1F7"/>
+    <text x="54" y="29" text-anchor="middle" class="tiny">CHAT</text>
+    <text x="54" y="47" text-anchor="middle" class="small">角色对话</text>
+  </g>
+  <g transform="translate(1008 344)">
+    <rect width="108" height="58" rx="18" fill="#FFFFFF" stroke="#CDE1F7"/>
+    <text x="54" y="29" text-anchor="middle" class="tiny">IMAGE</text>
+    <text x="54" y="47" text-anchor="middle" class="small">形象生成</text>
+  </g>
+  <g transform="translate(1136 344)">
+    <rect width="108" height="58" rx="18" fill="#FFFFFF" stroke="#CDE1F7"/>
+    <text x="54" y="29" text-anchor="middle" class="tiny">DESKTOP</text>
+    <text x="54" y="47" text-anchor="middle" class="small">桌面陪伴</text>
+  </g>
+
+  <path d="M967 294C967 318 938 324 934 338" stroke="#1F6FEB" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M967 294C1018 312 1058 316 1062 338" stroke="#1F6FEB" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M967 294C1088 310 1182 310 1190 338" stroke="#1F6FEB" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <text x="64" y="458" class="subtitle">Bring your own model keys · Local-first character archive · Tauri desktop runtime</text>
+</svg>

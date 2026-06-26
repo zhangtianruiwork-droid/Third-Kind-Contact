@@ -38,17 +38,9 @@ Third Kind Contact / 英灵殿是一款 **MIT 开源** 的桌面端 AI 角色复
 
 ### 核心流程
 
-```mermaid
-flowchart LR
-  A["一句话 / 人物资料"] --> B["召唤向导"]
-  B --> C["语料补全"]
-  C --> D["灵魂蒸馏"]
-  D --> E["结构化角色档案"]
-  E --> F["角色对话"]
-  E --> G["形象生成"]
-  E --> H["桌面陪伴"]
-  E --> I["舞台展示"]
-```
+<p align="center">
+  <img src="docs/diagrams/core-workflow.svg" alt="Third Kind Contact core workflow" width="900" />
+</p>
 
 ### 适合人群
 
@@ -156,47 +148,9 @@ npx tauri build
 
 ### 能力架构
 
-```mermaid
-flowchart TD
-  subgraph UI["前端界面"]
-    A["英灵选择殿"]
-    B["召唤仪式"]
-    C["设置面板"]
-    D["桌面伙伴"]
-  end
-
-  subgraph Core["角色核心"]
-    E["角色档案"]
-    F["灵魂蒸馏"]
-    G["对话记忆"]
-    H["形象资产"]
-  end
-
-  subgraph APIs["外部模型接口"]
-    I["DeepSeek-compatible Chat API"]
-    J["OpenAI-compatible Image API"]
-    K["Ark / Seedance Video API"]
-  end
-
-  subgraph Local["本地存储"]
-    L["角色数据"]
-    M["聊天记录"]
-    N["设置与场景"]
-  end
-
-  A --> E
-  B --> F
-  C --> I
-  C --> J
-  C --> K
-  F --> E
-  E --> G
-  E --> H
-  D --> E
-  E --> L
-  G --> M
-  H --> N
-```
+<p align="center">
+  <img src="docs/diagrams/capability-architecture.svg" alt="Third Kind Contact capability architecture" width="920" />
+</p>
 
 ### 模块能力概览
 
