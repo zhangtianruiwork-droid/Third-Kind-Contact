@@ -3,8 +3,10 @@ export type CompanionSceneKind =
   | 'listening'
   | 'thinking'
   | 'talking'
+  | 'greeting'
   | 'comfort'
-  | 'focus';
+  | 'focus'
+  | 'standup';
 
 export type SceneGenerationStatus =
   | 'draft'
@@ -65,6 +67,8 @@ export const SCENE_KIND_LABELS: Record<CompanionSceneKind, string> = {
   listening: '认真倾听',
   thinking: '思考回应',
   talking: '轻声回应',
+  greeting: '招手问候',
   comfort: '安抚陪伴',
   focus: '专注共处',
+  standup: '起身行动',
 };

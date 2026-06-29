@@ -110,10 +110,20 @@ export function sceneToSeedanceInput(
   identityReferenceImage?: string,
 ): CreateSeedanceTaskInput {
   const identityImage = identityReferenceImage?.trim();
+  const manualRefs = referenceImages.filter(Boolean);
   const refs = [
     ...(identityImage ? [identityImage] : []),
-    ...referenceImages.filter(Boolean),
+    ...manualRefs,
   ].slice(0, 9);
+  const strictReferenceRule = manualRefs.length
+    ? [
+        'Strict uploaded reference image rule: every uploaded reference image is a character identity reference, not merely a mood board or style reference.',
+        'Generate the same character shown in the reference image as faithfully as possible.',
+        'Preserve the reference character face shape, facial features, hairstyle, hair color, eye color, outfit design, accessories, age impression, body proportions, and core color palette.',
+        'The scene, pose, action, hands, props, and background may change widely, but the character design must remain locked to the uploaded reference.',
+        'Do not redesign the character, do not invent a different outfit, do not change the face, and do not use the uploaded image as style-only inspiration.',
+      ].join(' ')
+    : '';
   const identityRule = [
     'Identity reference rule: the first supplied image is captured from the approved idle animation and must be used only as the character design reference.',
     'Preserve the same face, hairstyle, hair color, eye color, outfit, accessories, body proportions, age impression, and overall color palette.',
@@ -125,9 +135,7 @@ export function sceneToSeedanceInput(
 
   return {
     model: scene.model || settings.model,
-    prompt: identityImage
-      ? `${scene.prompt}\n\n${identityRule}`
-      : scene.prompt,
+    prompt: [scene.prompt, strictReferenceRule, identityImage ? identityRule : ''].filter(Boolean).join('\n\n'),
     referenceImages: refs,
     firstFrameImage: undefined,
     lastFrameImage: undefined,

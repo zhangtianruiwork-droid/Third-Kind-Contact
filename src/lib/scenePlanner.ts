@@ -35,6 +35,12 @@ const BLUEPRINTS: Array<{
     motion: '动作重点是表达：嘴部轻微说话感、手势说明、展示物件、点头或短暂微笑，节奏像正在和用户对话。',
   },
   {
+    kind: 'greeting',
+    triggerHint: '用户进入、唤醒角色、打招呼或角色主动欢迎时使用',
+    scene: '角色注意到用户到来，放下手中的事情，转向屏幕并做出符合性格的问候动作。可以抬手招手、轻轻挥手、扶帽致意、微微鞠躬、展示小道具或露出开朗的欢迎表情。',
+    motion: '动作重点是清楚的问候：抬手、挥手、身体微转、眼神看向用户，动作幅度比普通说话更大；但仍保持桌面小舞台的稳定镜头和角色优雅感。',
+  },
+  {
     kind: 'comfort',
     triggerHint: '用户低落、焦虑、失眠、需要安抚时使用',
     scene: '角色进入温柔陪伴状态，背景变成更安静的夜间或暖光场景；可以递出热饮、把外套披在椅背、放下手中工作、轻轻坐近，表达稳定和关心。',
@@ -45,6 +51,12 @@ const BLUEPRINTS: Array<{
     triggerHint: '学习、工作、番茄钟、安静陪伴时使用',
     scene: '角色专注地做自己的长期任务，和用户并肩工作。根据人设可以写作、读书、练习剑术维护、整理素材、修理机械、绘制星图或调配药剂。节奏平稳，适合循环播放。',
     motion: '动作重点是并肩专注：持续写作、阅读、维护装备、绘制或整理材料，偶尔短暂停顿，不频繁看向用户。',
+  },
+  {
+    kind: 'standup',
+    triggerHint: '角色准备行动、切换任务、被用户邀请一起出发时使用',
+    scene: '角色从坐姿或靠近桌面的待机姿态中起身，整理衣摆、拿起代表性道具，像准备陪用户进入下一段任务。背景可以出现门口、窗边、书桌旁或小舞台边缘，让动作有明确空间感。',
+    motion: '动作重点是大幅度姿态变化：起身、站起来、转身、拿起道具、向前迈半步或整理外套；必须明显区别于待机、说话和专注状态，但不要跳跃、奔跑或剧烈运镜。',
   },
 ];
 
@@ -102,6 +114,7 @@ export function buildCompanionScenes(
       `动作设计：${motion}`,
       [
         '人物一致性要求：必须保持同一个角色的脸型、五官、眼睛颜色、发型、发色、服装、配饰、年龄感、体型比例和整体色调一致。',
+        '参考图要求：如果提供人物参考图，必须严格按照参考图生成同一个角色；参考图优先级高于文字想象，不得换脸、换发型、换服装主设计、换年龄感或只参考画风。',
         '动作差异要求：除待机场景外，不要复刻待机视频里的姿势、手部位置、道具摆放、镜头角度或背景布局；每个状态都要有清楚不同的陪伴行为。',
         '镜头要求：固定桌面小舞台机位，像一台放在桌面上的透明小剧场；不要电影感运镜，不要推拉摇移、环绕、旋转、快速缩放、抖动、切镜或突然改变景别。',
         '表现方式要求：主要通过角色自己的动作、表情、手势、正在使用的道具和环境小细节来表现状态，不要依赖镜头运动制造变化。',
@@ -130,6 +143,8 @@ export function buildCompanionScenes(
 
 export function inferSceneKindFromDialogue(text: string): CompanionSceneKind {
   const lower = text.toLowerCase();
+  if (/你好|嗨|早上好|晚上好|打招呼|招手|欢迎|hello|hi|wave|greet/.test(lower)) return 'greeting';
+  if (/站起来|起身|出发|走吧|行动|准备|开始任务|stand|stand up|go/.test(lower)) return 'standup';
   if (/难过|焦虑|崩溃|失眠|害怕|孤独|压力|不开心|累了|安慰|陪陪|sad|anxious|tired/.test(lower)) return 'comfort';
   if (/学习|工作|专注|番茄钟|复习|写作|coding|study|focus|work/.test(lower)) return 'focus';
   if (/为什么|怎么|如何|分析|推理|想一想|计划|方案|why|how/.test(lower)) return 'thinking';
@@ -138,6 +153,7 @@ export function inferSceneKindFromDialogue(text: string): CompanionSceneKind {
 
 export function sceneKindFromPetAction(action: PetState): CompanionSceneKind {
   if (action === 'thinking') return 'thinking';
-  if (action === 'talking' || action === 'waving') return 'talking';
+  if (action === 'waving') return 'greeting';
+  if (action === 'talking') return 'talking';
   return 'idle';
 }

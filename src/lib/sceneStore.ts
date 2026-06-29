@@ -17,7 +17,7 @@ function writeIndex(index: SceneIndex): void {
 }
 
 function sortScenes(scenes: CompanionScene[]): CompanionScene[] {
-  const order = ['idle', 'listening', 'thinking', 'talking', 'comfort', 'focus'];
+  const order = ['idle', 'greeting', 'listening', 'thinking', 'talking', 'standup', 'comfort', 'focus'];
   return [...scenes].sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
 }
 
