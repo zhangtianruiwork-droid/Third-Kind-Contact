@@ -73,7 +73,7 @@ function parseReferenceImages(value: string): string[] {
     .split(/\r?\n/)
     .map(v => v.trim())
     .filter(Boolean)
-    .slice(0, 9);
+    .slice(0, 1);
 }
 
 function formatBytes(bytes: number): string {
@@ -202,14 +202,13 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
     [scenes],
   );
   const totalSceneCount = scenes.length || 8;
-  const referenceImageCount = uploadedReferenceImages.length + parseReferenceImages(referenceImages).length;
-  const anchor = useMemo(() => findIdleAnchorFrame(scenes), [scenes]);
-  const hasDrafts = scenes.length > 0;
-
   const collectReferenceImages = useCallback(() => [
     ...uploadedReferenceImages.map(image => image.dataUrl),
     ...parseReferenceImages(referenceImages),
-  ].filter(Boolean).slice(0, 9), [referenceImages, uploadedReferenceImages]);
+  ].filter(Boolean).slice(0, 1), [referenceImages, uploadedReferenceImages]);
+  const referenceImageCount = collectReferenceImages().length;
+  const anchor = useMemo(() => findIdleAnchorFrame(scenes), [scenes]);
+  const hasDrafts = scenes.length > 0;
 
   useEffect(() => {
     getArkConfigStatus()
@@ -247,8 +246,10 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
     event.target.value = '';
     if (!files.length) return;
 
-    const accepted = files.filter(isAcceptedReferenceImage);
-    const rejected = files.length - accepted.length;
+    const supported = files.filter(isAcceptedReferenceImage);
+    const accepted = supported.slice(0, 1);
+    const rejected = files.length - supported.length;
+    const ignored = Math.max(0, supported.length - accepted.length);
 
     if (!accepted.length) {
       setNotice('未识别到可用图片。请上传 png、jpg、jpeg、webp、gif、bmp、tiff、heic 或 heif。');
@@ -264,24 +265,17 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
         dataUrl: await readFileAsDataUrl(file),
       })));
 
-      setUploadedReferenceImages(prev => {
-        const existing = new Set(prev.map(item => item.id));
-        const merged = [
-          ...prev,
-          ...loaded.filter(item => !existing.has(item.id)),
-        ].slice(0, 9);
-        return merged;
-      });
+      setUploadedReferenceImages(loaded.slice(0, 1));
 
       setNotice([
-        `已载入 ${loaded.length} 张角色参考图，生成时会严格按参考图保持人物形象。`,
+        `已载入 1 张角色参考图，生成时只会把这一张图传给 Seedance 作为人物身份参考。`,
+        ignored ? '一次只使用 1 张参考图，其他图片已忽略。' : '',
         rejected ? `${rejected} 个文件不是支持的图片格式，已跳过。` : '',
-        uploadedReferenceImages.length + loaded.length > 9 ? '参考图最多使用 9 张，超出的已忽略。' : '',
       ].filter(Boolean).join(' '));
     } catch (err) {
       setNotice(err instanceof Error ? err.message : String(err));
     }
-  }, [uploadedReferenceImages.length]);
+  }, []);
 
   const removeUploadedReferenceImage = useCallback((id: string) => {
     setUploadedReferenceImages(prev => prev.filter(image => image.id !== id));
@@ -338,12 +332,13 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
       return;
     }
 
-    const useIdentityReference = !!options.anchorImage && scene.id !== options.anchorSceneId;
+    const refs = options.manualRefs ?? collectReferenceImages();
+    const hasUserReference = refs.length > 0;
+    const useIdentityReference = !hasUserReference && !!options.anchorImage && scene.id !== options.anchorSceneId;
     setBusyId(scene.id);
-    setNotice(`${scene.title}：正在创建 Seedance 任务${useIdentityReference ? '（角色形象参考）' : ''}。`);
+    setNotice(`${scene.title}：正在创建 Seedance 任务${hasUserReference ? '（单张上传参考图）' : useIdentityReference ? '（待机锚点参考）' : ''}。`);
 
     try {
-      const refs = options.manualRefs ?? collectReferenceImages();
       const renderSettings = {
         ...settings,
         model,
@@ -418,7 +413,7 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
         remoteVideoUrl: videoUrl,
         localPath: downloaded.localPath,
         bytes: downloaded.bytes,
-        generationMode: useIdentityReference ? 'identityReference' : 'reference',
+        generationMode: hasUserReference || useIdentityReference ? 'identityReference' : 'reference',
         anchorSceneId: useIdentityReference ? options.anchorSceneId : undefined,
         error: undefined,
         ...framePatch,
@@ -458,7 +453,7 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
 
   const renderOneWithAnchor = useCallback(async (scene: CompanionScene) => {
     const manualRefs = collectReferenceImages();
-    if (scene.kind === 'idle') {
+    if (manualRefs.length > 0 || scene.kind === 'idle') {
       await renderScene(scene, { manualRefs, forceReturnLastFrame: true });
       return;
     }
@@ -478,6 +473,19 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
 
   const renderAll = useCallback(async (forceConsistent = false) => {
     const manualRefs = collectReferenceImages();
+
+    if (manualRefs.length > 0) {
+      const latestScenes = SceneStore.get(character.id);
+      for (const scene of latestScenes) {
+        if (!forceConsistent && scene.status === 'succeeded') continue;
+        await renderScene(scene, {
+          manualRefs,
+          forceReturnLastFrame: true,
+        });
+      }
+      return;
+    }
+
     const found = await getIdleAnchor(manualRefs, true);
 
     if (!found) {
@@ -533,7 +541,7 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
               <h2 style={{ margin: 0, fontSize: 22, letterSpacing: '-0.01em' }}>小舞台场景</h2>
             </div>
             <div style={{ fontFamily: FM, fontSize: 11, color: '#8E8E93', marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {character.name} · 已生成 {playableCount}/{totalSceneCount} · 角色一致 {identityCount}/{totalSceneCount} · 参考图 {Math.min(referenceImageCount, 9)}/9
+              {character.name} · 已生成 {playableCount}/{totalSceneCount} · 角色一致 {identityCount}/{totalSceneCount} · 参考图 {referenceImageCount}/1
             </div>
           </div>
         </div>
@@ -604,7 +612,7 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
               style={inputStyle}
             />
             <div style={{ fontFamily: FM, fontSize: 10, color: '#8E8E93', lineHeight: 1.6 }}>
-              上传参考图会作为人物身份强参考；程序会先保存 Seedance 尾帧作为角色锚点，后续片段严格保持人物形象，但动作幅度和场景可以更丰富。
+              上传参考图会作为唯一人物身份参考直接传给 Seedance；有参考图时不再叠加待机锚点，避免多图冲突。动作幅度和场景可以更丰富。
             </div>
           </section>
 
@@ -631,16 +639,15 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
               onChange={e => setCompanionNeed(e.target.value)}
               style={{ ...inputStyle, minHeight: 70, resize: 'vertical', lineHeight: 1.6 }}
             />
-            <label style={labelStyle}>角色参考图上传（可选，png / jpg / webp / gif / bmp / tiff / heic）</label>
+            <label style={labelStyle}>角色参考图上传（可选，仅 1 张，png / jpg / webp / gif / bmp / tiff / heic）</label>
             <label style={uploadBoxStyle}>
               <UploadCloud size={18} color={ACCENT} />
-              <span style={{ fontSize: 13, fontWeight: 600 }}>上传人物参考图</span>
+              <span style={{ fontSize: 13, fontWeight: 600 }}>上传 1 张人物参考图</span>
               <span style={{ fontFamily: FM, fontSize: 10, color: '#8E8E93' }}>
-                参考图会严格锁定脸型、发型、服装主设计和整体配色；最多 9 张。
+                参考图会严格锁定脸型、发型、服装主设计和整体配色；新上传会替换旧参考图。
               </span>
               <input
                 type="file"
-                multiple
                 accept={REFERENCE_IMAGE_ACCEPT}
                 onChange={handleReferenceUpload}
                 style={{ display: 'none' }}
@@ -666,15 +673,15 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
                 ))}
               </div>
             )}
-            <label style={labelStyle}>角色参考图 URL / Base64（可选，每行一张）</label>
+            <label style={labelStyle}>角色参考图 URL / Base64（可选，仅使用第一张）</label>
             <textarea
               value={referenceImages}
               onChange={e => setReferenceImages(e.target.value)}
-              placeholder="也可以粘贴图片 URL 或 data:image/...;base64。上传图优先，文本参考图会排在其后。"
+              placeholder="也可以粘贴 1 个图片 URL 或 data:image/...;base64。若已上传图片，这里会被忽略。"
               style={{ ...inputStyle, minHeight: 58, resize: 'vertical', lineHeight: 1.5 }}
             />
             <div style={{ fontFamily: FM, fontSize: 10, color: '#8E8E93', lineHeight: 1.6, marginTop: 6 }}>
-              严格参考模式：人物脸型、发型、发色、眼睛、服装主设计、配饰、年龄感和体型比例必须贴近参考图；动作可以变化为招手、起身、转身、拿道具、走近等更大幅度状态。
+              单图严格参考模式：Seedance 每次只接收这一张人物参考图。人物脸型、发型、发色、眼睛、服装主设计、配饰、年龄感和体型比例必须贴近参考图；动作可以变化为招手、起身、转身、拿道具、走近等更大幅度状态。
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10 }}>
               <button onClick={handlePlan} style={primaryButtonStyle}>

@@ -110,18 +110,17 @@ export function sceneToSeedanceInput(
   identityReferenceImage?: string,
 ): CreateSeedanceTaskInput {
   const identityImage = identityReferenceImage?.trim();
-  const manualRefs = referenceImages.filter(Boolean);
+  const manualRef = referenceImages.find(Boolean)?.trim();
   const refs = [
-    ...(identityImage ? [identityImage] : []),
-    ...manualRefs,
-  ].slice(0, 9);
-  const strictReferenceRule = manualRefs.length
+    manualRef || identityImage || '',
+  ].filter(Boolean).slice(0, 1);
+  const strictReferenceRule = manualRef
     ? [
-        'Strict uploaded reference image rule: every uploaded reference image is a character identity reference, not merely a mood board or style reference.',
-        'Generate the same character shown in the reference image as faithfully as possible.',
+        'Strict single reference image rule: the only supplied reference image is the character identity reference, not a mood board or style reference.',
+        'Generate the same character shown in that single reference image as faithfully as possible.',
         'Preserve the reference character face shape, facial features, hairstyle, hair color, eye color, outfit design, accessories, age impression, body proportions, and core color palette.',
         'The scene, pose, action, hands, props, and background may change widely, but the character design must remain locked to the uploaded reference.',
-        'Do not redesign the character, do not invent a different outfit, do not change the face, and do not use the uploaded image as style-only inspiration.',
+        'Do not blend multiple identities, do not redesign the character, do not invent a different outfit, do not change the face, and do not use the uploaded image as style-only inspiration.',
       ].join(' ')
     : '';
   const identityRule = [
@@ -135,7 +134,7 @@ export function sceneToSeedanceInput(
 
   return {
     model: scene.model || settings.model,
-    prompt: [scene.prompt, strictReferenceRule, identityImage ? identityRule : ''].filter(Boolean).join('\n\n'),
+    prompt: [scene.prompt, strictReferenceRule, !manualRef && identityImage ? identityRule : ''].filter(Boolean).join('\n\n'),
     referenceImages: refs,
     firstFrameImage: undefined,
     lastFrameImage: undefined,
