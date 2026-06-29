@@ -113,6 +113,12 @@ function statusText(scene: CompanionScene): string {
 function sceneError(status: SeedanceTaskStatus): string {
   const error = status.error;
   if (!error) return `${status.status}`;
+  if (error.code === 'OutputVideoSensitiveContentDetected.PolicyViolation') {
+    return 'Seedance 输出审核拦截：生成视频可能过于接近受版权保护的角色/IP。请把参考图和描述改成原创角色，移除作品名、角色名、logo、徽章、标志性服装、专属武器等可识别元素后重试。';
+  }
+  if (error.code === 'InputImageSensitiveContentDetected.PrivacyInformation') {
+    return 'Seedance 输入审核拦截：参考图可能包含真人或真实人物肖像。请换成原创二次元/插画设定图，避免真人照片、影视截图、公众人物或过于写实的人脸。';
+  }
   return [error.code, error.message].filter(Boolean).join(': ') || `${status.status}`;
 }
 
@@ -183,7 +189,7 @@ export function SceneGenPage({ character, onBack, onDone }: Props) {
   const [apiKey, setApiKey] = useState('');
   const [model, setModel] = useState(DEFAULT_SEEDANCE_SETTINGS.model);
   const [visualDescription, setVisualDescription] = useState(() => defaultVisualDescription(character));
-  const [companionNeed, setCompanionNeed] = useState('桌面陪伴、聊天切换、学习工作陪伴、情绪安抚，整体像热门乙女游戏式精致二次元角色进入 Live2D 小舞台。');
+  const [companionNeed, setCompanionNeed] = useState('桌面陪伴、聊天切换、学习工作陪伴、情绪安抚，整体是原创精致二次元角色进入透明桌面小舞台。');
   const [referenceImages, setReferenceImages] = useState('');
   const [uploadedReferenceImages, setUploadedReferenceImages] = useState<UploadedReferenceImage[]>([]);
   const [settings, setSettings] = useState<SeedanceRenderSettings>(DEFAULT_SEEDANCE_SETTINGS);

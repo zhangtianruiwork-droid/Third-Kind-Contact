@@ -121,6 +121,8 @@ export function sceneToSeedanceInput(
         'Preserve the reference character face shape, facial features, hairstyle, hair color, eye color, outfit design, accessories, age impression, body proportions, and core color palette.',
         'The scene, pose, action, hands, props, and background may change widely, but the character design must remain locked to the uploaded reference.',
         'Do not blend multiple identities, do not redesign the character, do not invent a different outfit, do not change the face, and do not use the uploaded image as style-only inspiration.',
+        'Copyright safety: do not generate or name any existing anime, game, film, manga, celebrity, mascot, or commercial IP character.',
+        'Remove or generalize protected identifiers such as logos, emblems, school badges, team marks, signature weapons, exact uniforms, and other recognizable IP-specific symbols while preserving the original user character identity.',
       ].join(' ')
     : '';
   const identityRule = [

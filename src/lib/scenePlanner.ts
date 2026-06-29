@@ -63,7 +63,7 @@ const BLUEPRINTS: Array<{
 export function defaultVisualDescription(character: Character): string {
   const traits = character.tags.slice(0, 3).join('、');
   return [
-    `${character.name} 的二次元动画形象，默认参考热门乙女游戏式精致立绘审美`,
+    `${character.name} 的原创二次元动画形象，默认采用精致视觉小说立绘审美`,
     character.title,
     traits ? `气质关键词：${traits}` : '',
     OTOME_GAME_VISUAL_STYLE_CN,
@@ -105,7 +105,7 @@ export function buildCompanionScenes(
 
   return BLUEPRINTS.map(({ kind, triggerHint, scene, motion }) => {
     const prompt = [
-      '二次元动画风格，无声短视频，桌面小窗 Live2D 小舞台质感。',
+      '原创二次元动画风格，无声短视频，透明桌面小舞台质感。',
       OTOME_GAME_VISUAL_STYLE_CN,
       identity,
       `用户需求：${need}。`,
@@ -115,6 +115,7 @@ export function buildCompanionScenes(
       [
         '人物一致性要求：必须保持同一个角色的脸型、五官、眼睛颜色、发型、发色、服装、配饰、年龄感、体型比例和整体色调一致。',
         '参考图要求：如果提供人物参考图，必须严格按照参考图生成同一个角色；参考图优先级高于文字想象，不得换脸、换发型、换服装主设计、换年龄感或只参考画风。',
+        '原创化要求：即使参考图很强，也不要生成任何已有动漫、游戏、影视、漫画、名人或商业 IP 角色；如果参考图接近某个已知角色，请保留通用外观特征但移除可识别 IP 标志、徽章、专属服装细节、武器和 logo。',
         '动作差异要求：除待机场景外，不要复刻待机视频里的姿势、手部位置、道具摆放、镜头角度或背景布局；每个状态都要有清楚不同的陪伴行为。',
         '镜头要求：固定桌面小舞台机位，像一台放在桌面上的透明小剧场；不要电影感运镜，不要推拉摇移、环绕、旋转、快速缩放、抖动、切镜或突然改变景别。',
         '表现方式要求：主要通过角色自己的动作、表情、手势、正在使用的道具和环境小细节来表现状态，不要依赖镜头运动制造变化。',
