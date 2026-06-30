@@ -1,4 +1,4 @@
-# Third Kind Contact / 英灵殿
+# Third Kind Contact / 第三类接触
 
 <p align="center">
   <img src="docs/screenshots/desktop-companion-demo-optimized.gif" alt="Third Kind Contact desktop companion demo" width="760" />
